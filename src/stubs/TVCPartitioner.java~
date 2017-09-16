@@ -1,0 +1,20 @@
+package stubs;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Partitioner;
+
+
+public class TVCPartitioner <K2, V2> extends Partitioner<Text, IntWritable> {
+	
+public int getPartition(Text key,IntWritable value, int numReduceTasks) {
+
+	//read the key 
+		String line = key.toString();
+		int year = Integer.parseInt(line.split(",(?=(?:(?:[^\"]*+\"){2})*+[^\"]*+$)",-1)[0]);
+		int partitn = year%10;
+		return  partitn% numReduceTasks;
+	//split the key so we can partition based on the year 
+	
+}
+}
